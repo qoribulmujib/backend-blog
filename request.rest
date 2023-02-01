@@ -1,0 +1,44 @@
+GET http://localhost:5000/users
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySUQiOjgsIm5hbWUiOiJNdWhhbWFkIiwiZW1haWwiOiJtdWhhbWFkcmVyZUBnbWFpbC5jb20iLCJpYXQiOjE2NzQ0NDA4NDEsImV4cCI6MTY3NDQ0MDg2MX0.gJ7SNnPvamFXn_osXDAb-8zzMoOitTsK-L0g-8ixFYE
+
+###
+POST http://localhost:5000/users
+Content-Type: application/json
+
+{
+    "name": "Muhamad",
+    "email": "muhamadrere@gmail.com",
+    "password": "12345678",
+    "confirPassword" : "12345678"
+}
+###
+POST http://localhost:5000/login
+Content-Type: application/json
+
+{
+    "email": "muhamadrere@gmail.com",
+    "password": "12345678"
+}
+###
+GET http://localhost:5000/token
+
+
+###
+DELETE http://localhost:5000/logout
+
+###
+GET http://localhost:5000/posts
+
+###
+GET http://localhost:5000/posts/cara-ampih-menjadi-vvibu
+###
+
+POST http://localhost:5000/posts
+Content-Type: application/json
+
+{
+     "title": "Membuat martabak basah",
+    "image": "dfdsafdsfdfd",
+    "text": "fdsfsdfdsfdfwefwefdwfd",
+    "active": true
+}
