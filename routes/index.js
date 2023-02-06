@@ -15,16 +15,21 @@ import { uploadFilesImage } from "../middleware/FileUpload.js";
 const router = express.Router();
 //!AUTH
 router.get("/users", verifyToken, getUsers);
-router.post("/users", Register);
+router.post("/register", Register);
 router.post("/login", Login);
-router.get("/token", refreshToken);
-router.delete("/logout", Logout);
+router.get("/token", verifyToken, refreshToken);
+router.delete("/logout", verifyToken, Logout);
 
 //?BLOG
-router.get("/posts", getPosts);
-router.get("/posts/:slug", getPostById);
-router.post("/posts", uploadFilesImage("image"), savePost);
-router.patch("/posts/:slug", uploadFilesImage("image"), updatePost);
-router.delete("/posts/:slug", deletePost);
+router.get("/posts", verifyToken, getPosts);
+router.get("/posts/:slug", verifyToken, getPostById);
+router.post("/posts", verifyToken, uploadFilesImage("image"), savePost);
+router.patch(
+  "/posts/:slug",
+  verifyToken,
+  uploadFilesImage("image"),
+  updatePost
+);
+router.delete("/posts/:slug", verifyToken, deletePost);
 
 export default router;
