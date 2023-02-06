@@ -6,6 +6,7 @@ export const addPost = async ({
   text,
   slug,
   active,
+  userId,
   url,
   res,
 }) => {
@@ -15,6 +16,7 @@ export const addPost = async ({
     text: text,
     slug: slug,
     active: active,
+    userId: userId,
     url: url,
   });
   res.status(200).json({
@@ -29,6 +31,7 @@ export const editPost = async ({
   text,
   slug,
   active,
+  userId,
   url,
   res,
   paramsSlug,
@@ -40,12 +43,14 @@ export const editPost = async ({
       text: text,
       slug: slug,
       active: active,
+      userId: userId,
       url: url,
     },
     { where: { slug: paramsSlug } }
   );
   res.status(200).json({
     status: true,
+    data: newPost,
     message: "Update Successfully!",
   });
 };

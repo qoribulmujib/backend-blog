@@ -4,6 +4,7 @@ import slug from "slug";
 import { addPost, editPost } from "../helper/CRUDPost.js";
 import e from "express";
 import { RemoveLocalImage } from "../helper/RemoveImage.js";
+import Users from "../models/UserModel.js";
 
 export const getPosts = async (req, res) => {
   try {
@@ -34,6 +35,7 @@ export const getPostById = async (req, res) => {
 };
 
 export const savePost = async (req, res) => {
+  const tempEmail = req?.email;
   const schema = Joi.object({
     title: Joi.string().required(),
     image: Joi.any(),
@@ -52,6 +54,8 @@ export const savePost = async (req, res) => {
   }
 
   try {
+    const user = await Users.findOne({ where: { email: tempEmail } });
+    const { id, name, email } = user;
     const tempSlug = slug(req?.body?.title, "-");
     const checkSlug = await Posts.findAll({ where: { slug: tempSlug } });
     if (checkSlug.length > 0) {
@@ -64,6 +68,7 @@ export const savePost = async (req, res) => {
         slug: newSlug,
         active: req?.body?.active,
         url: process.env.PATH_FILE + "uploads/" + req?.file?.filename,
+        userId: id,
         res: res,
       });
     } else {
@@ -74,6 +79,7 @@ export const savePost = async (req, res) => {
         slug: tempSlug,
         active: req?.body?.active,
         url: process.env.PATH_FILE + "uploads/" + req?.file?.filename,
+        userId: id,
         res: res,
       });
     }
