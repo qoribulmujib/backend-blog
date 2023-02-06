@@ -1,6 +1,5 @@
 import { Sequelize } from "sequelize";
 import db from "../config/Database.js";
-import Posts from "./PostModel.js";
 
 const { DataTypes } = Sequelize;
 
@@ -28,5 +27,3 @@ const Users = db.define(
 );
 
 export default Users;
-
-Users.hasMany(Posts, {});

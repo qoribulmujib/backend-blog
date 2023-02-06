@@ -18,8 +18,7 @@ const Posts = db.define(
       allowNull: false,
     },
     userId: {
-      type: DataTypes.STRING,
-      allowNull: false,
+      type: DataTypes.INTEGER,
     },
   },
   {
@@ -27,11 +26,10 @@ const Posts = db.define(
   }
 );
 
-export default Posts;
+Users.hasMany(Posts, { foreignKey: "userId" });
+Posts.hasOne(Users, { foreignKey: "id" });
 
-Posts.hasOne(Users, {
-  foreignKey: "userId",
-});
+export default Posts;
 
 (async () => {
   await db.sync();
