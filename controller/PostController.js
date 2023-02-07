@@ -93,6 +93,7 @@ export const savePost = async (req, res) => {
 };
 
 export const updatePost = async (req, res) => {
+  const tempEmail = req?.email;
   const paramsSlug = req?.params?.slug;
   const file = req?.file;
   const schema = Joi.object({
@@ -112,20 +113,19 @@ export const updatePost = async (req, res) => {
     });
   }
   try {
+    const user = await Users.findOne({ where: { email: tempEmail } });
+    const { id, name, email } = user;
     const checkSlug = await Posts.findOne({ where: { slug: paramsSlug } });
     if (!checkSlug)
       return res.status(404).json({
         status: false,
         message: "Data Tidak ditemukan!",
       });
-
     if (file && checkSlug?.image) {
       RemoveLocalImage(checkSlug?.image);
     }
-
     let x = Math.floor(Math.random() * 100000 + 1);
     const newSlug = slug(req?.body?.title + "-" + x);
-
     editPost({
       title: req?.body?.title,
       image: req?.file?.path,
@@ -134,6 +134,7 @@ export const updatePost = async (req, res) => {
       active: req?.body?.active,
       url: process.env.PATH_FILE + "uploads/" + req?.file?.filename,
       res: res,
+      userId: id,
       paramsSlug: paramsSlug,
     });
   } catch (error) {

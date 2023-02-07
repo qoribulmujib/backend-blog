@@ -36,7 +36,7 @@ export const editPost = async ({
   res,
   paramsSlug,
 }) => {
-  const newPost = await Posts.update(
+  await Posts.update(
     {
       title: title,
       image: image,
@@ -50,7 +50,6 @@ export const editPost = async ({
   );
   res.status(200).json({
     status: true,
-    data: newPost,
     message: "Update Successfully!",
   });
 };
