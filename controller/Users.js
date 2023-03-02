@@ -91,7 +91,7 @@ export const Login = async (req, res) => {
     const accesToken = Jwt.sign(
       { userID, name, email },
       process.env.ACCESS_TOKEN_SECRET,
-      { expiresIn: "1d" }
+      { expiresIn: "1s" }
     );
     const refreshToken = Jwt.sign(
       { userID, name, email },
@@ -109,7 +109,7 @@ export const Login = async (req, res) => {
       maxAge: 24 * 60 * 60 * 1000,
       // secure: true
     });
-    res.json({ accesToken });
+    res.json({ accesToken, name, email });
   } catch (error) {
     res.status(404).json({
       message: "Email tidak ditemukan!",
